@@ -1,6 +1,6 @@
 import { connect } from 'mongoose';
 import debug from 'debug';
-import appConfig from '../appConfig.js';
+import appConfig from '../../appConfig.js';
 
 const logger = debug('app:dbConnection ->');
 const { mongoUrl } = appConfig;

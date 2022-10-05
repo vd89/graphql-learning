@@ -2,13 +2,11 @@ import express from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
-import debug from 'debug';
 
 import APServer from './gql/index.js';
 import appConfig from './appConfig.js';
 
 const app = express();
-const appLog = debug('app:app -> ');
 const { whiteList } = appConfig;
 
 const corsOptionsDelegate = function(req, callback) {
@@ -32,6 +30,9 @@ const corsOptionsDelegate = function(req, callback) {
   }
   callback(null, corsOptions);
 };
+
+// Model import
+import './database/models/index.js';
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
