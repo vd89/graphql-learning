@@ -1,4 +1,4 @@
-export const tasks = () => {
+export const tasks =() => {
   return [
     { _id: '1', name: 'Work', completed: false, userId: '3' },
     { _id: '2', name: 'Reading', completed: true, userId: '2' },
