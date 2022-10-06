@@ -8,6 +8,12 @@ extend type Query {
 
 extend type Mutation {
   signup(input: signupInput): User
+  login(input: loginInput): User
+}
+
+input loginInput {
+  email: String!
+  password: String!
 }
 
 input signupInput {
@@ -24,6 +30,7 @@ type User {
   createdAt: Date!
   updatedAt: Date!
   message: String
+  token: String
 }
 
 `;

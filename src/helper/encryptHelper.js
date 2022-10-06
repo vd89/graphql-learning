@@ -1,7 +1,8 @@
 import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
 import appConfig from '../appConfig.js';
 
-const { encryptionKey, algorithm } = appConfig;
+const { encryptionKey, algorithm, jwtSecret } = appConfig;
 
 export const generateRandomString = (_length) => {
   return crypto
@@ -34,4 +35,16 @@ export const decrypt = async (_text) => {
   decrypted = Buffer.concat([decrypted, decipher.final()]);
 
   return decrypted.toString();
+};
+
+export const comparePassword = async (_pass, _hashPass) => {
+  return await decrypt(_hashPass) === _pass ? true : false;
+};
+
+export const generateAuthToken = async (_userId, _email) => {
+  return jwt.sign({ email: _email }, jwtSecret, { expiresIn: '10h' });
+};
+
+export const tokenVerify = async (_token) => {
+  return jwt.verify(_token, jwtSecret);
 };
