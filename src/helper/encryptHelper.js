@@ -41,7 +41,7 @@ export const comparePassword = async (_pass, _hashPass) => {
   return await decrypt(_hashPass) === _pass ? true : false;
 };
 
-export const generateAuthToken = async (_userId, _email) => {
+export const generateAuthToken = async (_email) => {
   return jwt.sign({ email: _email }, jwtSecret, { expiresIn: '10h' });
 };
 
