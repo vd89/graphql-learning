@@ -5,6 +5,18 @@ import { comparePassword, encrypt, generateAuthToken } from '../helper/encryptHe
 
 const logger = debug('app:userController ->');
 
+export const getUserData = async (_email) => {
+  try {
+    const user = await User.findOne({ email: _email });
+    if (!user) {
+      throw new Error('User not found!');
+    }
+    return user;
+  } catch (err) {
+    logger(err.message);
+    throw err;
+  }
+};
 
 export const signupController = async (_input) => {
   try {

@@ -1,10 +1,14 @@
-import { tasks, users } from '../../constants/index.js';
-import { loginController, signupController } from '../../controller/userController.js';
+import debug from 'debug';
+import { tasks } from '../../constants/index.js';
+import { loginController, signupController, getUserData } from '../../controller/userController.js';
+// eslint-disable-next-line import/namespace
+import { combine, isAuth } from '../../helper/gqlResolvers.js';
+
+const logger = debug('app:userResolv -> ');
 
 const userResolvers = {
   Query: {
-    users: () => users(),
-    user: (_, { _id })=> users().find((user) => user._id === _id),
+    user: combine(isAuth, async (_, __, { email })=> await getUserData(email)),
   },
 
   Mutation: {

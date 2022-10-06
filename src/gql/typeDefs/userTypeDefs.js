@@ -2,8 +2,7 @@ import { gql } from 'apollo-server-express';
 
 const userTypeDefs = gql`
 extend type Query {
-  users:[User!]
-  user(_id: ID!): User!
+  user: User!
 }
 
 extend type Mutation {
