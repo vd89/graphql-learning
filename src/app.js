@@ -38,8 +38,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('combined'));
 app.use('*', cors(corsOptionsDelegate));
-app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
-// app.use(helmet({ contentSecurityPolicy: (process.env.NODE_ENV === 'production') ? undefined : false }));
+app.use(helmet());
+// app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
+
 
 await APServer.start();
 APServer.applyMiddleware({ app, path: '/graphql' });
