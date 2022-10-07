@@ -1,10 +1,10 @@
 import debug from 'debug';
-import { tasks } from '../../constants/index.js';
+import { getTaskByUserId } from '../../controller/taskController.js';
 import { loginController, signupController, getUserData } from '../../controller/userController.js';
-// eslint-disable-next-line import/namespace
+
 import { combine, isAuth } from '../../helper/gqlResolvers.js';
 
-const logger = debug('app:userResolv -> ');
+const logger = debug('app:userResolver -> ');
 
 const userResolvers = {
   Query: {
@@ -17,7 +17,7 @@ const userResolvers = {
   },
 
   User: {
-    tasks: ({ _id }) => tasks().filter((task) => task.userId === _id),
+    tasks: async ({ id }) => await getTaskByUserId(id),
   },
 };
 

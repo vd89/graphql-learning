@@ -15,6 +15,7 @@ const APServer = new ApolloServer({
     logger(req.email);
     return {
       email: req.email,
+      loggedInUserId: req.loggedInUserId,
     };
   },
 });

@@ -18,6 +18,19 @@ export const getUserData = async (_email) => {
   }
 };
 
+export const getUserById = async (id) => {
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      throw new Error('User not found!');
+    }
+    return user;
+  } catch (err) {
+    logger(err.message);
+    throw err;
+  }
+};
+
 export const signupController = async (_input) => {
   try {
     const { email, password, name } = _input;

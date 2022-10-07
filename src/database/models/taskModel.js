@@ -4,6 +4,8 @@ const _schema = new Schema({
   name: { type: String, required: true },
   completed: { type: Boolean, required: true },
   user: { type: Schema.ObjectId, ref: 'User' },
+}, {
+  timestamps: true,
 });
 
 // eslint-disable-next-line require-jsdoc
