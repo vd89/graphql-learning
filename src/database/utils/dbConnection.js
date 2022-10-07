@@ -1,9 +1,11 @@
-import { connect } from 'mongoose';
-import debug from 'debug';
+import mongoPkg from 'mongoose';
+import debugPkg from 'debug';
 import appConfig from '../../appConfig.js';
 
-const logger = debug('app:dbConnection ->');
+const logger = debugPkg('app:dbConnection ->');
 const { mongoUrl } = appConfig;
+
+const { connect, set } = mongoPkg;
 const mongoOpt = {
   keepAlive: true,
   useNewUrlParser: true,
@@ -15,6 +17,7 @@ const mongoOpt = {
 const dbConnection = async () => {
   try {
     await connect(mongoUrl, mongoOpt);
+    set('debug', true); // get from mongoose
     logger(`MongoDb -> Connected to mongoDb Server`);
   } catch (err) {
     logger(err.message);

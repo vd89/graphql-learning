@@ -2,6 +2,7 @@ import debug from 'debug';
 
 import Task from '../database/models/taskModel.js';
 import User from '../database/models/userModel.js';
+import { base64ToString, stringToBase64 } from '../helper/converter.js';
 const logger = debug('app:taskController -> ');
 
 
@@ -31,12 +32,25 @@ export const createTaskByUser = async (_input, _email) => {
   }
 };
 
-export const getAllTaskByUser = async (_userId) => {
+export const getAllTaskByUser = async (_cursor, _limit, _userId) => {
   try {
-    // const _query = {};
-    // const tasks = await Task.find(_query).sort({ _id: -1 }).limit(_limit + 1);
-    const tasks = await Task.find({ user: _userId });
-    return tasks;
+    const _query = { user: _userId };
+    if (_cursor) {
+      _query['_id'] = {
+        '$lt': base64ToString(_cursor),
+      };
+    }
+    let tasks = await Task.find(_query).sort({ _id: -1 }).limit(_limit + 1);
+    const hasNextPage = tasks.length > _limit;
+    tasks = hasNextPage ? tasks.slice(0, -1) : tasks;
+
+    return {
+      taskFeed: tasks,
+      pageInfo: {
+        nextPageCursor: hasNextPage ? stringToBase64(tasks[tasks.length -1].id) : null,
+        hasNextPage,
+      },
+    };
   } catch (err) {
     logger(err.message);
     throw err;

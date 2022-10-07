@@ -18,9 +18,10 @@ export const getUserData = async (_email) => {
   }
 };
 
-export const getUserById = async (id) => {
+export const getUserById = async (id, _loaders) => {
   try {
-    const user = await User.findById(id);
+    // const user = await User.findById(id);
+    const user = await _loaders.user.load(id.toString());
     if (!user) {
       throw new Error('User not found!');
     }
